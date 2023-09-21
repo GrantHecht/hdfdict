@@ -90,7 +90,7 @@ class LazyHdfDict(UserDict):
         return tuple(self.keys())
             
 
-def load(hdf, lazy=True, unpacker=unpack_dataset, *args, **kwargs):
+def load(hdf, *args, lazy=True, unpacker=unpack_dataset, **kwargs):
     """Returns a dictionary containing the
     groups as keys and the datasets as values
     from given hdf file.
@@ -166,7 +166,7 @@ def pack_dataset(hdfobject, key, value):
         # if this fails again, restructure your data!   
 
 
-def dump(data, hdf, packer=pack_dataset, *args, **kwargs):
+def dump(data, hdf, *args, packer=pack_dataset, **kwargs):
     """Adds keys of given dict as groups and values as datasets
     to the given hdf-file (by string or object) or group object.
 
@@ -199,6 +199,6 @@ def dump(data, hdf, packer=pack_dataset, *args, **kwargs):
             else:
                 packer(hdfobject, key, value)
 
-    with hdf_file(hdf, *args, **kwargs) as hdf:
+    with hdf_file(hdf, True, *args, **kwargs) as hdf:
         _recurse(data, hdf)
         return hdf
